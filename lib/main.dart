@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'age.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -72,23 +73,51 @@ class _AgeCalcState extends State<AgeCalc> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
-                  onTap: () async {
-                    DateTime? date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2099),
-                    );
-                    setState(() {
-                      pickedDate = date;
-                      dateCheck(selectedDate);
-                      if (pickedDate != null) {
-                        dob.text = "${pickedDate!.day.toString()}-${pickedDate!.month.toString()}-${pickedDate!.year.toString()}";
-                      } else {
-                        dob.text = "Please Select a date";
-                      }
-                    });
-                  },
+                  decoration: InputDecoration(
+                      suffixIcon: GestureDetector(
+                    onTap: () async {
+                      DateTime? date = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2099),
+                      );
+                      setState(() {
+                        pickedDate = date;
+                        dateCheck(pickedDate);
+                        if (pickedDate != null) {
+                          String formatedDate = DateFormat('dd-MM-yyyy').format(pickedDate!);
+                          dob.text = formatedDate;
+                        } else {
+                          dob.text = "Choose a Date";
+                        }
+                        if (date != null) {
+                          Age age = calculateAge(date!);
+                          calculatedDate = "${age.year} ${age.month} ${age.days}";
+                        } else {
+                          calculatedDate = "No Date Selected!";
+                        }
+                      });
+                    },
+                    child: const Icon(Icons.calendar_month_outlined),
+                  )),
+                  // onTap: () async {
+                  //   DateTime? date = await showDatePicker(
+                  //     context: context,
+                  //     initialDate: DateTime.now(),
+                  //     firstDate: DateTime(1900),
+                  //     lastDate: DateTime(2099),
+                  //   );
+                  //   setState(() {
+                  //     pickedDate = date;
+                  //     dateCheck(selectedDate);
+                  //     if (pickedDate != null) {
+                  //       dob.text = "${pickedDate!.day.toString()}-${pickedDate!.month.toString()}-${pickedDate!.year.toString()}";
+                  //     } else {
+                  //       dob.text = "Please Select a date";
+                  //     }
+                  //   });
+                  // },
                 ),
               ),
               const SizedBox(
