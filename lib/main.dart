@@ -24,7 +24,7 @@ class _AgeCalcState extends State<AgeCalc> {
   @override
   void initState() {
     super.initState();
-    dob.text = pickedDate.toString();
+    dob.text = DateFormat('dd-MM-yyyy').format(DateTime.now());
   }
 
   dateCheck(str) {
@@ -93,7 +93,7 @@ class _AgeCalcState extends State<AgeCalc> {
                         }
                         if (date != null) {
                           Age age = calculateAge(date!);
-                          calculatedDate = "${age.year} ${age.month} ${age.days}";
+                          calculatedDate = "Tap the Button";
                         } else {
                           calculatedDate = "No Date Selected!";
                         }
@@ -101,23 +101,6 @@ class _AgeCalcState extends State<AgeCalc> {
                     },
                     child: const Icon(Icons.calendar_month_outlined),
                   )),
-                  // onTap: () async {
-                  //   DateTime? date = await showDatePicker(
-                  //     context: context,
-                  //     initialDate: DateTime.now(),
-                  //     firstDate: DateTime(1900),
-                  //     lastDate: DateTime(2099),
-                  //   );
-                  //   setState(() {
-                  //     pickedDate = date;
-                  //     dateCheck(selectedDate);
-                  //     if (pickedDate != null) {
-                  //       dob.text = "${pickedDate!.day.toString()}-${pickedDate!.month.toString()}-${pickedDate!.year.toString()}";
-                  //     } else {
-                  //       dob.text = "Please Select a date";
-                  //     }
-                  //   });
-                  // },
                 ),
               ),
               const SizedBox(
@@ -125,7 +108,6 @@ class _AgeCalcState extends State<AgeCalc> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  DateTime currentDate = DateTime.now();
                   Age? age = calculateAge(DateTime.now());
                   if (pickedDate != null) {
                     age = calculateAge(pickedDate!);
@@ -145,7 +127,7 @@ class _AgeCalcState extends State<AgeCalc> {
                 height: 20,
               ),
               Text(
-                "Age: $calculatedDate",
+                calculatedDate,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
