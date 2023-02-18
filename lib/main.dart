@@ -124,7 +124,6 @@ class _AgeCalcState extends State<AgeCalc> {
                   }
 
                   if (pickedDate != null) {
-                    print("Date Picked");
                     age = calculateAge(pickedDate!);
                   }
 
