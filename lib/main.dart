@@ -77,33 +77,33 @@ class _AgeCalcState extends State<AgeCalc> {
                     fontWeight: FontWeight.bold,
                   ),
                   decoration: InputDecoration(
-                      suffixIcon: GestureDetector(
-                    onTap: () async {
-                      DateTime? date = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2099),
-                      );
-                      setState(() {
-                        pickedDate = date;
-                        dateCheck(pickedDate);
-                        if (pickedDate != null) {
-                          String formatedDate = DateFormat('dd-MM-yyyy').format(pickedDate!);
-                          dob.text = formatedDate;
-                        } else {
-                          dob.text = "Choose a Date";
-                        }
-                        if (date != null) {
-                          Age age = calculateAge(date!);
-                          calculatedDate = "Tap the Button";
-                        } else {
-                          calculatedDate = "No Date Selected!";
-                        }
-                      });
-                    },
-                    child: const Icon(Icons.calendar_month_outlined),
-                  )),
+                    suffixIcon: GestureDetector(
+                      onTap: () async {
+                        DateTime? date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2099),
+                        );
+                        setState(() {
+                          pickedDate = date;
+                          dateCheck(pickedDate);
+                          if (pickedDate != null) {
+                            String formatedDate = DateFormat('dd-MM-yyyy').format(pickedDate!);
+                            dob.text = formatedDate;
+                          } else {
+                            dob.text = "Choose a Date";
+                          }
+                          if (date != null) {
+                            calculatedDate = "Tap the Button";
+                          } else {
+                            calculatedDate = "No Date Selected!";
+                          }
+                        });
+                      },
+                      child: const Icon(Icons.calendar_month_outlined),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
