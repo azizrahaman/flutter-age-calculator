@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'age.dart';
 import 'package:intl/intl.dart';
@@ -38,6 +40,7 @@ class _AgeCalcState extends State<AgeCalc> {
     int years = now.year - birthdate.year;
     int months = now.month - birthdate.month;
     int days = now.day - birthdate.day;
+    
 
     if (months < 0 || (months == 0 && days < 0)) {
       years--;
@@ -108,16 +111,29 @@ class _AgeCalcState extends State<AgeCalc> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Age? age = calculateAge(DateTime.now());
+                  Age? age;
+                  int flag = 0;
+                  try {
+                    DateTime userInputAge = DateFormat('dd-MM-yyyy').parse(dob.text);
+                    pickedDate = null;
+                    age = calculateAge(userInputAge);
+                    inspect(age);
+                  } catch (e) {
+                    flag = 0;
+                    calculatedDate = "Enter date properly!";
+                  }
+
                   if (pickedDate != null) {
+                    print("Date Picked");
                     age = calculateAge(pickedDate!);
                   }
 
                   setState(() {
-                    if (pickedDate != null) {
-                      calculatedDate = "${age?.year} Years ${age?.month} Month ${age?.days} Days";
+                    if (age != null) {
+                      calculatedDate = "${age.year} Years ${age.month} Month ${age.days} Days";
                     } else {
-                      calculatedDate = "Select a date to find age";
+                      flag == 1 ? calculatedDate = "Select a date to find age" : "Enter date properly or use Date Picker!" ;
+                      
                     }
                   });
                 },
